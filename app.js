@@ -1,3 +1,4 @@
+localStorage.setItem('balance', 0);
 // Инициализация Telegram WebApp
 const tg = window.Telegram.WebApp;
 tg.expand();
