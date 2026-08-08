@@ -375,3 +375,15 @@ function playRingRoulette() {
 // Старт при загрузке
 initMinesBoard();
 setRingMultiplier(1.1, document.querySelector('.mult-btn.active'));
+window.addEventListener('DOMContentLoaded', () => {
+    starsBalance = 0;
+    tonBalance = 0;
+    if (typeof updateBalances === 'function') {
+        updateBalances();
+    } else {
+        const sEl = document.getElementById('stars-balance');
+        const tEl = document.getElementById('ton-balance');
+        if (sEl) sEl.textContent = '0';
+        if (tEl) tEl.textContent = '0.0';
+    }
+});
