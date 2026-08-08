@@ -43,19 +43,26 @@ function changeBet(val) {
 }
 
 function getBet() {
-    const bet = parseFloat(betInput.value);
-    if (!bet || bet <= 0) {
+    const bet = parseFloat(betInput.value) || 0;
+    
+    // Проверяем в зависимости от текущей валюты
+    if (currentCurrency === 'STARS') {
+        if (bet < 5) {
+            alert('Минимальная ставка для Stars: 1 ⭐');
+            return 0;
+        }
+    } else if (currentCurrency === 'TON') {
+        if (bet < 0.5) {
+            alert('Минимальная ставка для TON: 0.1 💎');
+            return 0;
+        }
+    }
+    
+    if (bet <= 0) {
         alert('Введите корректную ставку');
         return 0;
     }
-    if (currentCurrency === 'STARS' && bet > starsBalance) {
-        alert('Недостаточно Stars!');
-        return 0;
-    }
-    if (currentCurrency === 'TON' && bet > tonBalance) {
-        alert('Недостаточно TON!');
-        return 0;
-    }
+    
     return bet;
 }
 
