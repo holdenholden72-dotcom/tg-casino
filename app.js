@@ -1,11 +1,12 @@
 localStorage.setItem('balance', 0);
+let balance = 0;
 // Инициализация Telegram WebApp
 const tg = window.Telegram.WebApp;
 tg.expand();
 tg.ready();  
 // Переменные
-let starsBalance = 1000;
-let tonBalance = 10.0;
+let starsBalance = 0;
+let tonBalance = 0;
 let currentCurrency = 'STARS';
 
 // Элементы UI
