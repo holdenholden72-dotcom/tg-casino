@@ -1,3 +1,5 @@
+localStorage.clear(); 
+let balance = 0;
 localStorage.setItem('balance', 0);
 let balance = 0;
 // Инициализация Telegram WebApp
