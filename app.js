@@ -1,12 +1,19 @@
-localStorage.clear(); 
-let balance = 0;
+localStorage.clear();
+
+// Очищаем локальное хранилище
 localStorage.setItem('balance', 0);
-let balance = 0;
+localStorage.setItem('starsBalance', 0);
+localStorage.setItem('tonBalance', 0);
+
 // Инициализация Telegram WebApp
-const tg = window.Telegram.WebApp;
-tg.expand();
-tg.ready();  
-// Переменные
+const tg = window.Telegram ? window.Telegram.WebApp : null;
+if (tg) {
+    tg.expand();
+    tg.ready();
+}
+
+// Переменные баланса (объявляем один единственный раз!)
+let balance = 0;
 let starsBalance = 0;
 let tonBalance = 0;
 let currentCurrency = 'STARS';
@@ -15,7 +22,6 @@ let currentCurrency = 'STARS';
 const starsEl = document.getElementById('stars-balance');
 const tonEl = document.getElementById('ton-balance');
 const betInput = document.getElementById('bet-amount');
-
 function updateBalances() {
     starsEl.textContent = starsBalance;
     tonEl.textContent = tonBalance.toFixed(1);
