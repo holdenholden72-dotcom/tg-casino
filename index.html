@@ -18,6 +18,7 @@
     </header>
 
     <!-- ОСНОВНОЙ КОНТЕНТ (ВКЛАДКИ) -->
+   <!-- ОСНОВНОЙ КОНТЕНТ (ВКЛАДКИ) -->
     <main class="content">
         
         <!-- Вкладка 1: Игры (Сетка 4 квадрата) -->
@@ -53,6 +54,76 @@
                 </div>
             </div>
         </div>
+
+        <!-- Экран игры Wheel (теперь точно скрывается отдельно) -->
+        <div id="game-wheel-screen" class="tab-content">
+            <div class="game-header-top">
+                <button class="back-btn" onclick="closeGame()">← Назад</button>
+                <span class="online-badge">🟢 10 онлайн</span>
+            </div>
+
+            <h1 class="page-title" style="text-align: center; margin-top: 5px; font-size: 20px;">Wheel</h1>
+
+            <!-- Само колесо и указатель (сделали чуть компактнее, чтобы не резалось) -->
+            <div class="wheel-container">
+                <div class="wheel-pointer"></div>
+                <div id="wheel-element" class="wheel-circle">
+                    <div class="wheel-center-text">
+                        <span id="wheel-center-val">🎲</span>
+                        <span class="wheel-subtext">Крути!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Переключатель валюты -->
+            <div class="currency-switcher">
+                <button class="curr-btn active" onclick="setCurrency('STARS', this)">⭐</button>
+                <button class="curr-btn" onclick="setCurrency('TON', this)">💎</button>
+            </div>
+
+            <!-- Выбор множителя -->
+            <div class="multiplier-slider-container">
+                <div class="multiplier-labels">
+                    <span class="mult-item active" onclick="setMultiplier(1.1, this)">1.1x</span>
+                    <span class="mult-item" onclick="setMultiplier(2, this)">2x</span>
+                    <span class="mult-item" onclick="setMultiplier(3, this)">3x</span>
+                    <span class="mult-item" onclick="setMultiplier(5, this)">5x</span>
+                    <span class="mult-item" onclick="setMultiplier(10, this)">10x</span>
+                </div>
+            </div>
+
+            <!-- Панель ставки -->
+            <div class="bet-control-panel">
+                <div class="bet-input-box">
+                    <button class="bet-minus" onclick="changeBet(-1)">-</button>
+                    <input type="number" id="wheel-bet" value="1" min="1">
+                    <button class="bet-plus" onclick="changeBet(1)">+</button>
+                </div>
+                <button class="action-btn spin-main-btn" onclick="spinWheel()">Ставка <span id="btn-bet-val">1</span> ⭐</button>
+            </div>
+        </div>
+
+        <!-- Вкладка 2: Пополнение -->
+        <div id="tab-deposit" class="tab-content">
+            <h1 class="page-title">Пополнение</h1>
+            <div class="card-section">
+                <p>Выберите способ пополнения:</p>
+                <button class="action-btn stars-btn" onclick="buyStars(100)">Пополнить 100 ⭐</button>
+                <button class="action-btn ton-btn" onclick="depositTon()">Пополнить 💎 (TON)</button>
+            </div>
+        </div>
+
+        <!-- Вкладка 3: Вывод -->
+        <div id="tab-withdraw" class="tab-content">
+            <h1 class="page-title">Вывод средств</h1>
+            <div class="card-section">
+                <p>Доступно для вывода: <span id="withdraw-stars">0</span> ⭐ / <span id="withdraw-ton">0</span> 💎</p>
+                <input type="number" id="withdraw-amount" placeholder="Введите сумму">
+                <button class="action-btn withdraw-main-btn" onclick="withdrawFunds()">Вывести</button>
+            </div>
+        </div>
+
+    </main>
 <!-- Экран игры Wheel (продвинутый дизайн) -->
 <div id="game-wheel-screen" class="tab-content">
     <div class="game-header-top">
