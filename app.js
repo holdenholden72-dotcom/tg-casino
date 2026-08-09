@@ -32,12 +32,54 @@ function checkMinBet(amount, currency) {
 // Открытие игры
 function openGame(gameName) {
     if (gameName === 'wheel') {
-        alert('Запуск игры Wheel!');
+        // Скрываем все вкладки и показываем экран колеса
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.getElementById('game-wheel-screen').classList.add('active');
     } else {
         alert('Эта игра скоро будет доступна!');
     }
 }
 
+// Закрытие игры и возврат в меню
+function closeGame() {
+    document.getElementById('game-wheel-screen').classList.remove('active');
+    document.getElementById('tab-games').classList.add('active');
+}
+
+// Логика вращения колеса
+function spinWheel() {
+    const bet = parseFloat(document.getElementById('wheel-bet').value) || 0;
+    
+    // Проверка минимальной ставки (1 звезда или 0.1 тон)
+    if (bet < 1) {
+        alert('Минимальная ставка: 1 ⭐ (или от 0.1 💎)');
+        return;
+    }
+
+    if (bet > starsBalance) {
+        alert('Недостаточно средств на балансе!');
+        return;
+    }
+
+    // Списываем ставку для примера со звёздами
+    starsBalance -= bet;
+    updateBalances();
+
+    alert('Колесо крутится...');
+
+    setTimeout(() => {
+        // Рандомный выигрыш (например, х2 или проигрыш)
+        const win = Math.random() > 0.5;
+        if (win) {
+            const reward = bet * 2;
+            starsBalance += reward;
+            alert(`Поздравляем! Вы выиграли ${reward} ⭐!`);
+        } else {
+            alert('К сожалению, вы проиграли :(');
+        }
+        updateBalances();
+    }, 1500);
+}
 // Заглушки пополнения и вывода
 function buyStars(amount) {
     alert('Пополнение Stars начнется через Telegram счета.');

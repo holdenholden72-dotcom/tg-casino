@@ -53,7 +53,18 @@
                 </div>
             </div>
         </div>
-
+        <!-- Экран игры Wheel (скрыт по умолчанию) -->
+<div id="game-wheel-screen" class="tab-content">
+    <button class="action-btn" onclick="closeGame()" style="background: #333; margin-bottom: 15px;">← Назад к играм</button>
+    <h1 class="page-title">Wheel of Fortune</h1>
+    
+    <div style="text-align: center; padding: 20px;">
+        <div id="wheel-box" style="font-size: 80px; margin-bottom: 20px;">🎡</div>
+        <input type="number" id="wheel-bet" placeholder="Сумма ставки (мин. 1 ⭐ / 0.1 💎)" style="margin-bottom: 10px;">
+        <button class="action-btn" onclick="spinWheel()" style="background: #007aff;">Крутить колесо</button>
+    </div>
+</div>
+        
         <!-- Вкладка 2: Пополнение -->
         <div id="tab-deposit" class="tab-content">
             <h1 class="page-title">Пополнение</h1>
