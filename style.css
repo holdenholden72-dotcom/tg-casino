@@ -2,383 +2,366 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
-    background-color: #030712;
+    background-color: #0b0e14;
     color: #ffffff;
     display: flex;
-    justify-content: center;
-    min-height: 100vh;
-}
-
-.app-container {
-    width: 100%;
-    max-width: 420px;
-    background: #0b0f19;
-    display: flex;
     flex-direction: column;
-    padding: 14px;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
 }
 
-.hidden {
-    display: none !important;
+/* Шапка с балансом */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    gap: 10px;
+}
+.balance-card {
+    background: #151a23;
+    border: 1px solid #222b38;
+    border-radius: 12px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    flex: 1;
+    justify-content: center;
 }
 
-/* ШАПКА И БАЛАНСЫ */
-.header {
+/* Контент */
+.content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 16px 80px 16px;
+}
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+.page-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Навигация игр */
+.games-nav-bar {
+    display: flex;
+    gap: 6px;
+    background: #151a23;
+    padding: 6px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    overflow-x: auto;
+}
+.g-nav-btn {
+    background: none;
+    border: none;
+    color: #8a96a3;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+}
+.g-nav-btn.active {
+    background: #1f2937;
+    color: white;
+}
+
+/* Панель ставки */
+.bet-panel-container {
+    background: #151a23;
+    border: 1px solid #222b38;
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+.currency-tabs {
     display: flex;
     gap: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
-
-.balance-card {
+.curr-tab-btn {
     flex: 1;
-    background: #111827;
-    border: 1px solid #1f2937;
-    padding: 8px 12px;
-    border-radius: 12px;
+    background: #101319;
+    border: 1px solid #222b38;
+    color: #8a96a3;
+    padding: 8px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.curr-tab-btn.active {
+    background: #1f2937;
+    color: #ffffff;
+    border-color: #3b82f6;
+}
+.bet-input-row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #38bdf8;
-}
-
-/* НАВИГАЦИЯ ИГР */
-.game-nav {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 4px;
-    background: #111827;
-    padding: 4px;
+    background: #101319;
     border-radius: 10px;
-    margin-bottom: 12px;
+    padding: 6px 12px;
+    border: 1px solid #222b38;
 }
-
-.nav-btn {
-    background: transparent;
-    border: none;
-    color: #6b7280;
-    padding: 8px 0;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.nav-btn.active {
-    background: #1f2937;
-    color: #38bdf8;
-}
-
-/* СЕКЦИЯ СТАВКИ */
-.bet-section {
-    background: #111827;
-    padding: 10px;
-    border-radius: 12px;
-    border: 1px solid #1f2937;
-    margin-bottom: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.currency-toggle {
-    display: flex;
-    gap: 4px;
-    background: #030712;
-    padding: 3px;
-    border-radius: 8px;
-}
-
-.curr-btn {
+.bet-input-row input {
     flex: 1;
-    background: transparent;
-    border: none;
-    color: #6b7280;
-    padding: 6px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.curr-btn.active {
-    background: #1f2937;
-    color: #fff;
-}
-
-.bet-input-box {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: #030712;
-    padding: 4px 8px;
-    border-radius: 8px;
-    border: 1px solid #1f2937;
-}
-
-.bet-input-box input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    color: #fff;
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: bold;
-    outline: none;
-}
-
-.step-btn {
-    background: #1f2937;
-    border: none;
-    color: #fff;
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* ОБЩИЕ ЭЛЕМЕНТЫ */
-.status-msg {
-    text-align: center;
-    color: #9ca3af;
-    font-size: 0.85rem;
-    margin: 8px 0;
-    min-height: 20px;
-}
-
-.action-btn {
-    width: 100%;
-    padding: 12px;
-    background: #2563eb;
+    background: none;
     border: none;
     color: white;
+    font-size: 18px;
+    text-align: center;
     font-weight: bold;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 0.95rem;
 }
-
-/* 1. МОНЕТКА */
-.coin-history-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #111827;
-    padding: 6px 10px;
+.bet-control-btn {
+    background: #222b38;
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
     border-radius: 8px;
-    margin-bottom: 12px;
+    font-size: 18px;
+    cursor: pointer;
 }
 
-.history-chips {
-    display: flex;
-    gap: 6px;
+/* Экраны мини-игр */
+.sub-game-screen {
+    display: none;
+}
+.sub-game-screen.active {
+    display: block;
 }
 
-.arena {
-    height: 140px;
-    background: #111827;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+/* Монетка */
+.game-history {
+    font-size: 14px;
+    color: #8a96a3;
     margin-bottom: 10px;
 }
-
-.coin-display {
-    font-size: 4rem;
-    transition: transform 0.5s;
+.coin-visual-box {
+    background: #151a23;
+    border-radius: 16px;
+    padding: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 15px;
+    border: 1px solid #222b38;
 }
-
-.coin-display.spinning {
-    transform: rotateY(720deg);
+.coin-item {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
 }
-
-.clown-avatar {
-    font-size: 3.5rem;
-}
-
-.coin-buttons {
+.coin-action-buttons {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
 }
 
-/* 2. СЛОТЫ */
-.slots-container {
+/* Общие кнопки действий */
+.action-btn {
+    width: 100%;
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Слоты */
+.slots-window {
     display: flex;
     justify-content: center;
     gap: 10px;
-    background: #111827;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 10px;
+    margin: 20px 0;
 }
-
 .slot-reel {
-    background: #030712;
+    background: #151a23;
+    border: 1px solid #222b38;
     width: 70px;
-    height: 70px;
+    height: 80px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.2rem;
-    border-radius: 10px;
-    border: 1px solid #1f2937;
+    font-size: 28px;
+    font-weight: bold;
+}
+.game-hint {
+    text-align: center;
+    color: #8a96a3;
+    font-size: 13px;
+    margin-bottom: 15px;
 }
 
-/* 3. МИНЫ (7x7) */
+/* Мины */
 .mines-settings {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #111827;
-    padding: 8px 12px;
-    border-radius: 8px;
+    background: #151a23;
+    padding: 10px 14px;
+    border-radius: 10px;
     margin-bottom: 10px;
-    font-size: 0.85rem;
 }
-
-.mines-count-selector {
+.mines-stepper {
     display: flex;
+    gap: 10px;
     align-items: center;
-    gap: 4px;
 }
-
-.mines-count-selector input {
-    width: 35px;
-    text-align: center;
-    background: transparent;
+.mines-stepper button {
+    background: #222b38;
+    color: white;
     border: none;
-    color: #fff;
-    font-weight: bold;
-}
-
-.mines-grid-7x7 {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-    aspect-ratio: 1;
-    margin-bottom: 10px;
-}
-
-.mine-cell {
-    background: #1f2937;
+    width: 28px;
+    height: 28px;
     border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
     cursor: pointer;
 }
-
-.mine-cell.opened {
-    background: #065f46;
+.mines-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    margin-bottom: 15px;
+}
+.mine-cell {
+    background: #151a23;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    border: 1px solid #222b38;
 }
 
-.mine-cell.boom {
-    background: #991b1b;
-}
-
-.take-btn {
-    background: #059669 !important;
-}
-
-/* 4. РУЛЕТКА (КОЛЬЦО) */
-.ring-roulette-wrapper {
+/* Колесо */
+.wheel-container-v2 {
     position: relative;
-    width: 210px;
-    height: 210px;
-    margin: 10px auto;
+    width: 180px;
+    height: 180px;
+    margin: 15px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-.ring-pointer {
+.wheel-pointer-v2 {
     position: absolute;
-    top: -6px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 20px;
-    color: #38bdf8;
+    top: -4px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 16px solid #3b82f6;
     z-index: 10;
 }
-
-.ring-wheel {
+.wheel-circle-v2 {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    transition: transform 3.5s cubic-bezier(0.1, 0.8, 0.1, 1);
+    background: conic-gradient(#2563eb 0deg 280deg, #1f2937 280deg 360deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 2s cubic-bezier(0.15, 0.85, 0.35, 1);
 }
-
-.ring-svg {
-    width: 100%;
-    height: 100%;
-    transform: rotate(-90deg);
-}
-
-.ring-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 125px;
-    height: 125px;
-    background: #0b0f19;
+.wheel-center-v2 {
+    width: 100px;
+    height: 100px;
+    background: #101319;
     border-radius: 50%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-}
-
-.ring-win-amount {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #38bdf8;
-}
-
-.ring-multiplier {
-    font-size: 0.8rem;
-    color: #9ca3af;
-}
-
-.no-loot-label {
-    position: absolute;
-    bottom: 10px;
-    font-size: 0.55rem;
-    color: #4b5563;
+    align-items: center;
+    font-size: 14px;
     font-weight: bold;
 }
-
-.multiplier-selector {
+.wheel-sub-val {
+    font-size: 11px;
+    color: #8a96a3;
+}
+.multiplier-row {
     display: flex;
-    gap: 3px;
-    background: #111827;
-    padding: 4px;
-    border-radius: 8px;
-    margin: 10px 0;
+    gap: 6px;
+    margin-bottom: 15px;
+    overflow-x: auto;
 }
-
 .mult-btn {
-    flex: 1;
-    background: transparent;
-    border: none;
-    color: #6b7280;
-    padding: 6px 0;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: bold;
+    background: #151a23;
+    border: 1px solid #222b38;
+    color: #8a96a3;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
     cursor: pointer;
+    flex: 1;
+}
+.mult-btn.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
 }
 
-.mult-btn.active {
-    background: #1f2937;
-    color: #38bdf8;
+/* Карточки пополнения/вывода/промо */
+.card-section {
+    background: #151a23;
+    border: 1px solid #222b38;
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.card-section input {
+    background: #101319;
+    border: 1px solid #222b38;
+    padding: 12px;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+}
+
+/* Нижняя навигация */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #11151d;
+    border-top: 1px solid #222b38;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+.nav-item {
+    background: none;
+    border: none;
+    color: #8a96a3;
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    flex: 1;
+}
+.nav-item span {
+    font-size: 18px;
+}
+.nav-item.active {
+    color: #3b82f6;
 }
