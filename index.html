@@ -23,10 +23,9 @@
     <!-- ОСНОВНОЙ КОНТЕНТ (ВКЛАДКИ) -->
     <main class="content">
         
-        <!-- ВКЛАДКА 1: ИГРЫ (МЕНЮ МИНИ-ИГР) -->
+        <!-- ВКЛАДКА 1: ИГРЫ -->
         <div id="tab-games" class="tab-content active">
             
-            <!-- Переключатель игр внутри вкладки -->
             <div class="games-nav-bar">
                 <button class="g-nav-btn active" onclick="switchGame('coin', this)">🪙 Монетка</button>
                 <button class="g-nav-btn" onclick="switchGame('slots', this)">🎰 Слоты</button>
@@ -34,7 +33,7 @@
                 <button class="g-nav-btn" onclick="switchGame('wheel', this)">🎯 Колесо</button>
             </div>
 
-            <!-- ОБЩИЙ БЛОК ВЫБОРА ВАЛЮТЫ И СТАВКИ ДЛЯ ИГР -->
+            <!-- ПАНЕЛЬ СТАВОК -->
             <div class="bet-panel-container">
                 <div class="currency-tabs">
                     <button class="curr-tab-btn active" onclick="setGameCurrency('STARS', this)">⭐ Stars</button>
@@ -48,12 +47,13 @@
                 </div>
             </div>
 
-            <!-- ИГРА 1: МОНЕТКА (без клоуна) -->
+            <!-- ИГРА 1: МОНЕТКА -->
             <div id="game-coin" class="sub-game-screen active">
-                <div class="game-history">История: 🦅 👑 🪙</div>
+                <div class="game-history" id="coin-history">История: 🦅 👑 🪙</div>
                 <div class="coin-visual-box">
-                    <div class="coin-item">🦅 Орел</div>
-                    <div class="coin-item">🪙 Ребро</div>
+                    <div class="coin-flipper" id="coin-flipper">
+                        <div class="coin-side coin-front">🪙</div>
+                    </div>
                 </div>
                 <div class="coin-action-buttons">
                     <button class="action-btn" onclick="playCoin('eagle')">🦅 Орёл (x2)</button>
@@ -65,52 +65,48 @@
             <!-- ИГРА 2: СЛОТЫ -->
             <div id="game-slots" class="sub-game-screen">
                 <div class="slots-window">
-                    <div class="slot-reel">7</div>
-                    <div class="slot-reel">7</div>
-                    <div class="slot-reel">7</div>
+                    <div class="slot-reel" id="reel-1">🍒</div>
+                    <div class="slot-reel" id="reel-2">🍋</div>
+                    <div class="slot-reel" id="reel-3">🍇</div>
                 </div>
-                <p class="game-hint">Выигрыш только при 3 одинаковых!</p>
+                <p class="game-hint">Соберите 3 одинаковых фрукта!</p>
                 <button class="action-btn" onclick="playSlots()">🎰 КРУТИТЬ</button>
             </div>
 
-            <!-- ИГРА 3: МИНЫ -->
+            <!-- ИГРА 3: МИНЫ (7x7) -->
             <div id="game-mines" class="sub-game-screen">
                 <div class="mines-settings">
-                    <span>Количество мин:</span>
+                    <span>Мины: <b id="mines-count">5</b></span>
                     <div class="mines-stepper">
                         <button onclick="changeMines(-1)">-</button>
-                        <span id="mines-count">3</span>
                         <button onclick="changeMines(1)">+</button>
                     </div>
                 </div>
-                <p class="game-hint">Выбери количество мин и начни игру!</p>
-                <div class="mines-grid" id="mines-grid">
-                    <!-- Сетка мин генерируется JS -->
-                </div>
-                <button class="action-btn" onclick="startMines()">🚀 Начать игру</button>
+                <div class="mines-grid-7x7" id="mines-grid"></div>
+                <button class="action-btn" id="mines-action-btn" onclick="startMinesGame()">🚀 Начать игру</button>
             </div>
 
             <!-- ИГРА 4: КОЛЕСО -->
             <div id="game-wheel" class="sub-game-screen">
-                <p class="game-hint">Выбери коэффициент и сделай ставку!</p>
+                <p class="game-hint">Выбери коэффициент и крути колесо!</p>
                 <div class="wheel-container-v2">
                     <div class="wheel-pointer-v2"></div>
                     <div class="wheel-circle-v2" id="wheel-element">
                         <div class="wheel-center-v2">
-                            <span id="wheel-center-val">+11.0 ⭐</span>
-                            <span class="wheel-sub-val">1.1x</span>
+                            <span id="wheel-center-val">🎯</span>
+                            <span class="wheel-sub-val" id="wheel-sub-text">1.1x</span>
                         </div>
                     </div>
                 </div>
                 <div class="multiplier-row">
-                    <button class="mult-btn active" onclick="setMultiplier(1.1, this)">1.1x</button>
-                    <button class="mult-btn" onclick="setMultiplier(2, this)">2x</button>
-                    <button class="mult-btn" onclick="setMultiplier(3, this)">3x</button>
-                    <button class="mult-btn" onclick="setMultiplier(5, this)">5x</button>
-                    <button class="mult-btn" onclick="setMultiplier(7, this)">7x</button>
-                    <button class="mult-btn" onclick="setMultiplier(10, this)">10x</button>
+                    <button class="mult-btn active" onclick="setMultiplier(1.1, 280, this)">1.1x</button>
+                    <button class="mult-btn" onclick="setMultiplier(2, 220, this)">2x</button>
+                    <button class="mult-btn" onclick="setMultiplier(3, 160, this)">3x</button>
+                    <button class="mult-btn" onclick="setMultiplier(5, 100, this)">5x</button>
+                    <button class="mult-btn" onclick="setMultiplier(7, 60, this)">7x</button>
+                    <button class="mult-btn" onclick="setMultiplier(10, 30, this)">10x</button>
                 </div>
-                <button class="action-btn" onclick="spinWheel()">Ставка <span id="wheel-btn-val">10</span> ⭐</button>
+                <button class="action-btn" onclick="spinWheel()">Крутить <span id="wheel-btn-val">10</span> ⭐</button>
             </div>
 
         </div>
@@ -119,7 +115,7 @@
         <div id="tab-deposit" class="tab-content">
             <h1 class="page-title">Пополнение</h1>
             <div class="card-section">
-                <p>Выберите способ пополнения баланса:</p>
+                <p>Выберите способ пополнения:</p>
                 <button class="action-btn" onclick="buyStars(100)">Пополнить 100 ⭐</button>
                 <button class="action-btn" onclick="depositTon()">Пополнить 💎 (TON)</button>
             </div>
@@ -139,7 +135,7 @@
         <div id="tab-promo" class="tab-content">
             <h1 class="page-title">Промокод</h1>
             <div class="card-section">
-                <p>Введите ваш бонусный промокод:</p>
+                <p>Введите бонусный промокод:</p>
                 <input type="text" id="promo-input" placeholder="PROMOCODE">
                 <button class="action-btn" onclick="activatePromo()">Активировать</button>
             </div>
@@ -147,20 +143,12 @@
 
     </main>
 
-    <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (4 КНОПКИ) -->
+    <!-- НИЖНЯЯ НАВИГАЦИЯ -->
     <nav class="bottom-nav">
-        <button class="nav-item active" onclick="switchTab('games', this)">
-            <span>🎮</span> Игры
-        </button>
-        <button class="nav-item" onclick="switchTab('deposit', this)">
-            <span>➕</span> Пополнение
-        </button>
-        <button class="nav-item" onclick="switchTab('withdraw', this)">
-            <span>📤</span> Вывод
-        </button>
-        <button class="nav-item" onclick="switchTab('promo', this)">
-            <span>🎁</span> Промокод
-        </button>
+        <button class="nav-item active" onclick="switchTab('games', this)"><span>🎮</span> Игры</button>
+        <button class="nav-item" onclick="switchTab('deposit', this)"><span>➕</span> Пополнение</button>
+        <button class="nav-item" onclick="switchTab('withdraw', this)"><span>📤</span> Вывод</button>
+        <button class="nav-item" onclick="switchTab('promo', this)"><span>🎁</span> Промокод</button>
     </nav>
 
     <script src="app.js"></script>
