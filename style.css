@@ -1,133 +1,260 @@
-body {
-    background-color: #0f0f0f;
-    color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    margin: 0;
-    padding-bottom: 80px;
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Telegram Mini Casino</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Шапка: Балансы -->
+        <header class="header">
+            <div class="balance-card">
+                <span class="bal-icon">⭐</span>
+                <span id="stars-balance">1000</span>
+            </div>
+            <div class="balance-card">
+                <span class="bal-icon">💎</span>
+                <span id="ton-balance">10.0</span>
+            </div>
+        </header>
+
+        <!-- Переключатель игр -->
+        <nav class="game-nav">
+            <button class="nav-btn active" onclick="switchGame('coin')">🪙 Монетка</button>
+            <button class="nav-btn" onclick="switchGame('slots')">🎰 Слоты</button>
+            <button class="nav-btn" onclick="switchGame('mines')">💣 Мины</button>
+        </nav>
+
+        <!-- ВЫБОР ВАЛЮТЫ И СТАВКИ -->
+        <div class="bet-section">
+            <div class="currency-toggle">
+                <button id="curr-stars" class="curr-btn active" onclick="setCurrency('STARS')">⭐ Stars</button>
+                <button id="curr-ton" class="curr-btn" onclick="setCurrency('TON')">💎 TON</button>
+            </div>
+            <div class="bet-input-box">
+                <button class="step-btn" onclick="changeBet(-5)">-</button>
+                <input type="number" id="bet-amount" value="10" min="1">
+                <span id="curr-icon-label">⭐</span>
+                <button class="step-btn" onclick="changeBet(5)">+</button>
+            </div>
+        </div>
+
+        <!-- ИГРА 1: МОНЕТКА -->
+        <main id="game-coin" class="game-screen">
+            <!-- История бросков (Колесо / Лента) -->
+            <div class="coin-history-bar">
+                <span class="history-label">История:</span>
+                <div class="history-chips" id="coin-history">
+                    <span class="chip">🦅</span>
+                    <span class="chip">👑</span>
+                    <span class="chip">🪙</span>
+                </div>
+            </div>
+
+            <div class="arena">
+                <div id="coin-display" class="coin-display">🪙</div>
+                <div class="clown-avatar">🤡</div>
+            </div>
+            <div id="coin-status" class="status-msg">Сделай ставку!</div>
+            <div class="coin-buttons">
+                <button class="action-btn" onclick="playCoin('eagle')">🦅 Орёл (x2)</button>
+                <button class="action-btn" onclick="playCoin('edge')">🪙 Ребро (x5)</button>
+                <button class="action-btn" onclick="playCoin('tails')">👑 Решка (x2)</button>
+            </div>
+        </main>
+
+        <!-- ИГРА 2: СЛОТЫ -->
+        <main id="game-slots" class="game-screen hidden">
+            <div class="slots-container">
+                <div class="slot-reel" id="reel1">7️⃣</div>
+                <div class="slot-reel" id="reel2">7️⃣</div>
+                <div class="slot-reel" id="reel3">7️⃣</div>
+            </div>
+            <div id="slots-status" class="status-msg">Выигрыш только при 3 одинаковых!</div>
+            <button class="action-btn spin-btn" onclick="playSlots()">🎰 КРУТИТЬ</button>
+        </main>
+
+        <!-- ИГРА 3: МИНЫ (7x7) -->
+        <main id="game-mines" class="game-screen hidden">
+            <!-- Выбор количества мин -->
+            <div class="mines-settings">
+                <span>Количество мин:</span>
+                <div class="mines-count-selector">
+                    <button class="step-btn" onclick="changeMinesCount(-1)">-</button>
+                    <input type="number" id="mines-count-input" value="3" readonly>
+                    <button class="step-btn" onclick="changeMinesCount(1)">+</button>
+                </div>
+            </div>
+
+            <div id="mines-status" class="status-msg">Выбери количество мин и начни игру!</div>
+
+            <!-- Сетка 7 на 7 -->
+            <div class="mines-grid-7x7" id="mines-grid">
+                <!-- 49 ячеек генерируются через JS -->
+            </div>
+
+            <button id="mines-action-btn" class="action-btn spin-btn" onclick="handleMinesBtn()">🚀 Начать игру</button>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+/* Стили для продвинутого колеса */
+.game-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+}
+.back-btn {
+    background: #2c2c2e;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+.online-badge {
+    font-size: 13px;
+    color: #34c759;
 }
 
-/* Шапка */
-.header {
-    padding: 16px;
-    background: #161618;
-    border-bottom: 1px solid #2c2c2e;
+/* Колесо */
+.wheel-container {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wheel-pointer {
+    position: absolute;
+    top: -5px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid #0098ea;
+    z-index: 10;
+}
+.wheel-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(#0098ea 0deg 280deg, #1c1c1e 280deg 360deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(0, 152, 234, 0.4);
+    transition: transform 2s cubic-bezier(0.15, 0.85, 0.35, 1);
+}
+.wheel-center-text {
+    width: 130px;
+    height: 130px;
+    background: #11141d;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+.wheel-subtext {
+    font-size: 11px;
+    color: #8e8e93;
+    margin-top: 4px;
+}
+
+/* Переключатель валюты */
+.currency-switcher {
+    display: flex;
+    background: #1c1c1e;
+    padding: 4px;
+    border-radius: 12px;
+    width: fit-content;
+    margin: 0 auto 15px auto;
+}
+.curr-btn {
+    background: none;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 9px;
+    color: #8e8e93;
     font-size: 16px;
+    cursor: pointer;
+}
+.curr-btn.active {
+    background: #2c2c2e;
+    color: white;
+}
+
+/* Множители */
+.multiplier-slider-container {
+    background: #1c1c1e;
+    padding: 12px;
+    border-radius: 14px;
+    margin-bottom: 15px;
+}
+.multiplier-labels {
+    display: flex;
+    justify-content: space-around;
+}
+.mult-item {
+    font-size: 13px;
+    color: #8e8e93;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.mult-item.active {
+    background: #007aff;
+    color: white;
     font-weight: bold;
 }
 
-/* Вкладки */
-.tab-content {
-    display: none;
-    padding: 16px;
-    min-height: 75vh;
-}
-.tab-content.active {
-    display: block;
-}
-
-.page-title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 16px;
-}
-
-/* Сетка игр (2х2 квадраты) */
-.games-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-}
-
-.game-card {
-    background: linear-gradient(135deg, #1e2230 0%, #11141d 100%);
-    border-radius: 20px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: transform 0.2s;
-}
-.game-card:active {
-    transform: scale(0.95);
-}
-.game-icon {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-.game-card h2 {
-    font-size: 18px;
-    margin: 0 0 6px 0;
-}
-.game-max {
-    font-size: 11px;
-    color: #8e8e93;
-}
-
-/* Карточки разделов пополнения/вывода */
-.card-section {
-    background: #1c1c1e;
-    padding: 20px;
-    border-radius: 16px;
-}
-.action-btn {
-    width: 100%;
-    padding: 14px;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-}
-.stars-btn { background-color: #f8c000; color: #000; }
-.ton-btn { background-color: #0098ea; color: #fff; }
-.withdraw-main-btn { background-color: #34c759; color: #fff; }
-
-input {
-    width: 100%;
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid #3a3a3c;
-    background: #2c2c2e;
-    color: white;
-    font-size: 16px;
-    box-sizing: border-box;
-    margin-top: 5px;
-    margin-bottom: 15px;
-}
-
-/* Нижнее меню */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 65px;
-    background-color: #1a1a1a;
+/* Панель ставки */
+.bet-control-panel {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-top: 1px solid #2c2c2c;
-    z-index: 100;
+    gap: 10px;
 }
-
-.nav-item {
+.bet-input-box {
+    display: flex;
+    background: #1c1c1e;
+    border-radius: 12px;
+    align-items: center;
+    padding: 4px;
+    width: 130px;
+}
+.bet-input-box input {
     background: none;
     border: none;
-    color: #8e8e93;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 11px;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    width: 50px;
+    margin: 0;
+    padding: 0;
+}
+.bet-minus, .bet-plus {
+    background: #2c2c2e;
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 18px;
     cursor: pointer;
+}
+.spin-main-btn {
     flex: 1;
-}
-
-.nav-icon {
-    font-size: 20px;
-    margin-bottom: 3px;
-}
-
-.nav-item.active {
-    color: #007aff;
+    margin-top: 0 !important;
+    background-color: #007aff;
 }

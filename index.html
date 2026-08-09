@@ -53,18 +53,53 @@
                 </div>
             </div>
         </div>
-        <!-- Экран игры Wheel (скрыт по умолчанию) -->
+<!-- Экран игры Wheel (продвинутый дизайн) -->
 <div id="game-wheel-screen" class="tab-content">
-    <button class="action-btn" onclick="closeGame()" style="background: #333; margin-bottom: 15px;">← Назад к играм</button>
-    <h1 class="page-title">Wheel of Fortune</h1>
-    
-    <div style="text-align: center; padding: 20px;">
-        <div id="wheel-box" style="font-size: 80px; margin-bottom: 20px;">🎡</div>
-        <input type="number" id="wheel-bet" placeholder="Сумма ставки (мин. 1 ⭐ / 0.1 💎)" style="margin-bottom: 10px;">
-        <button class="action-btn" onclick="spinWheel()" style="background: #007aff;">Крутить колесо</button>
+    <div class="game-header-top">
+        <button class="back-btn" onclick="closeGame()">← Назад</button>
+        <span class="online-badge">🟢 10 онлайн</span>
+    </div>
+
+    <h1 class="page-title" style="text-align: center; margin-top: 10px;">Wheel</h1>
+
+    <!-- Само колесо и указатель -->
+    <div class="wheel-container">
+        <div class="wheel-pointer"></div>
+        <div id="wheel-element" class="wheel-circle">
+            <div class="wheel-center-text">
+                <span id="wheel-center-val">🎲</span>
+                <span class="wheel-subtext">Крути!</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Переключатель валюты (Звезды / TON) -->
+    <div class="currency-switcher">
+        <button class="curr-btn active" onclick="setCurrency('STARS', this)">⭐</button>
+        <button class="curr-btn" onclick="setCurrency('TON', this)">💎</button>
+    </div>
+
+    <!-- Выбор множителя (1.1x - 10x) -->
+    <div class="multiplier-slider-container">
+        <div class="multiplier-labels">
+            <span class="mult-item active" onclick="setMultiplier(1.1, this)">1.1x</span>
+            <span class="mult-item" onclick="setMultiplier(2, this)">2x</span>
+            <span class="mult-item" onclick="setMultiplier(3, this)">3x</span>
+            <span class="mult-item" onclick="setMultiplier(5, this)">5x</span>
+            <span class="mult-item" onclick="setMultiplier(10, this)">10x</span>
+        </div>
+    </div>
+
+    <!-- Панель ставки и кнопка запуска -->
+    <div class="bet-control-panel">
+        <div class="bet-input-box">
+            <button class="bet-minus" onclick="changeBet(-1)">-</button>
+            <input type="number" id="wheel-bet" value="1" min="1">
+            <button class="bet-plus" onclick="changeBet(1)">+</button>
+        </div>
+        <button class="action-btn spin-main-btn" onclick="spinWheel()">Ставка <span id="btn-bet-val">1</span> ⭐</button>
     </div>
 </div>
-        
         <!-- Вкладка 2: Пополнение -->
         <div id="tab-deposit" class="tab-content">
             <h1 class="page-title">Пополнение</h1>
