@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Casino</title>
+    <title>SlotCasino</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
@@ -20,35 +20,32 @@
     <!-- ОСНОВНОЙ КОНТЕНТ (ВКЛАДКИ) -->
     <main class="content">
         
-        <!-- Вкладка 1: Игры (Сетка квадратиками) -->
-        <div id="tab-games" class="tab-content active">
-            <h1 class="page-title">Игры</h1>
-           <!-- Вкладка 1: Игры (Сетка квадратиками) -->
+        <!-- Вкладка 1: Игры (Сетка 4 квадрата) -->
         <div id="tab-games" class="tab-content active">
             <h1 class="page-title">Игры</h1>
             <div class="games-grid">
-                <!-- Карточка игры 1: Колесо -->
+                <!-- Игра 1: Wheel -->
                 <div class="game-card" onclick="openGame('wheel')">
                     <div class="game-icon">🎡</div>
                     <h2>Wheel</h2>
                     <span class="game-max">мин. 1 ⭐ / 0.1 💎</span>
                 </div>
 
-                <!-- Карточка игры 2: Мины -->
+                <!-- Игра 2: Mines -->
                 <div class="game-card" onclick="openGame('mines')">
                     <div class="game-icon">💣</div>
                     <h2>Mines</h2>
                     <span class="game-max">Скоро</span>
                 </div>
 
-                <!-- Карточка игры 3: Краш (НОВАЯ) -->
+                <!-- Игра 3: Crash -->
                 <div class="game-card" onclick="openGame('crash')">
                     <div class="game-icon">🚀</div>
                     <h2>Crash</h2>
                     <span class="game-max">Скоро</span>
                 </div>
 
-                <!-- Карточка игры 4: Слот (НОВАЯ) -->
+                <!-- Игра 4: Slots -->
                 <div class="game-card" onclick="openGame('slots')">
                     <div class="game-icon">🎰</div>
                     <h2>Slots</h2>
@@ -56,13 +53,14 @@
                 </div>
             </div>
         </div>
+
         <!-- Вкладка 2: Пополнение -->
         <div id="tab-deposit" class="tab-content">
             <h1 class="page-title">Пополнение</h1>
             <div class="card-section">
                 <p>Выберите способ пополнения:</p>
-                <button class="action-btn" onclick="buyStars(100)">Пополнить 100 ⭐</button>
-                <button class="action-btn" onclick="depositTon()">Пополнить TON 💎</button>
+                <button class="action-btn stars-btn" onclick="buyStars(100)">Пополнить 100 ⭐</button>
+                <button class="action-btn ton-btn" onclick="depositTon()">Пополнить 💎 (TON)</button>
             </div>
         </div>
 
@@ -70,15 +68,15 @@
         <div id="tab-withdraw" class="tab-content">
             <h1 class="page-title">Вывод средств</h1>
             <div class="card-section">
-                <p>Введите сумму для вывода:</p>
-                <input type="number" id="withdraw-amount" placeholder="Сумма">
-                <button class="action-btn" onclick="withdraw()">Вывести</button>
+                <p>Доступно для вывода: <span id="withdraw-stars">0</span> ⭐ / <span id="withdraw-ton">0</span> 💎</p>
+                <input type="number" id="withdraw-amount" placeholder="Введите сумму">
+                <button class="action-btn withdraw-main-btn" onclick="withdrawFunds()">Вывести</button>
             </div>
         </div>
 
     </main>
 
-    <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (3 вкладки) -->
+    <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchTab('games', this)">
             <span class="nav-icon">🎮</span>

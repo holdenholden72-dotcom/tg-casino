@@ -1,16 +1,25 @@
-/* Общие стили темного фона в стиле Telegram */
 body {
     background-color: #0f0f0f;
     color: #ffffff;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
-    padding-bottom: 80px; /* Отступ под нижнее меню */
+    padding-bottom: 80px;
 }
 
-/* Скрываем неактивные вкладки */
+/* Шапка */
+.header {
+    padding: 16px;
+    background: #161618;
+    border-bottom: 1px solid #2c2c2e;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Вкладки */
 .tab-content {
     display: none;
     padding: 16px;
+    min-height: 75vh;
 }
 .tab-content.active {
     display: block;
@@ -22,14 +31,13 @@ body {
     margin-bottom: 16px;
 }
 
-/* Сетка игр (квадратики 2 в ряд) */
+/* Сетка игр (2х2 квадраты) */
 .games-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
 }
 
-/* Карточка игры */
 .game-card {
     background: linear-gradient(135deg, #1e2230 0%, #11141d 100%);
     border-radius: 20px;
@@ -40,7 +48,7 @@ body {
     transition: transform 0.2s;
 }
 .game-card:active {
-    transform: scale(0.96);
+    transform: scale(0.95);
 }
 .game-icon {
     font-size: 40px;
@@ -48,14 +56,47 @@ body {
 }
 .game-card h2 {
     font-size: 18px;
-    margin: 0 0 8px 0;
+    margin: 0 0 6px 0;
 }
 .game-max {
-    font-size: 12px;
+    font-size: 11px;
     color: #8e8e93;
 }
 
-/* Нижняя панель навигации */
+/* Карточки разделов пополнения/вывода */
+.card-section {
+    background: #1c1c1e;
+    padding: 20px;
+    border-radius: 16px;
+}
+.action-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.stars-btn { background-color: #f8c000; color: #000; }
+.ton-btn { background-color: #0098ea; color: #fff; }
+.withdraw-main-btn { background-color: #34c759; color: #fff; }
+
+input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #3a3a3c;
+    background: #2c2c2e;
+    color: white;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+/* Нижнее меню */
 .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -88,35 +129,5 @@ body {
 }
 
 .nav-item.active {
-    color: #007aff; /* Синий цвет активной вкладки в стиле Telegram */
-}
-
-/* Кнопки и формы пополнения/вывода */
-.card-section {
-    background: #1c1c1e;
-    padding: 20px;
-    border-radius: 16px;
-    margin-top: 10px;
-}
-.action-btn {
-    width: 100%;
-    background-color: #007aff;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    margin-top: 10px;
-    cursor: pointer;
-}
-input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #3a3a3c;
-    background: #2c2c2e;
-    color: white;
-    font-size: 16px;
-    box-sizing: border-box;
+    color: #007aff;
 }
